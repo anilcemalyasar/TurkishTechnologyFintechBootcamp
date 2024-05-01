@@ -36,6 +36,9 @@ public class Main {
             System.out.println(product.getProductName());
         }
 
+        Category category2 = new Category(102, "Electronics");
+        List<Product> productList2 = new ArrayList<Product>();
+        category2.setProductList(productList2);
 
     }
 }
