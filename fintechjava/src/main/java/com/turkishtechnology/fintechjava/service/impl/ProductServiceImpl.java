@@ -1,10 +1,14 @@
 package com.turkishtechnology.fintechjava.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.turkishtechnology.fintechjava.model.dto.CreateProductDto;
+import com.turkishtechnology.fintechjava.model.entity.Category;
 import com.turkishtechnology.fintechjava.model.entity.Product;
+import com.turkishtechnology.fintechjava.repository.CategoryRepository;
 import com.turkishtechnology.fintechjava.repository.ProductRepository;
 import com.turkishtechnology.fintechjava.service.ProductService;
 
@@ -12,9 +16,11 @@ import com.turkishtechnology.fintechjava.service.ProductService;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -28,7 +34,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public String addProduct(Product product) {
+    public String addProduct(CreateProductDto createProductDto) {
+        Category category = categoryRepository.findById(createProductDto.getCategoryId()).orElseThrow();
+        Product product = new Product();
+        product.setProductName(createProductDto.getProductName());
+        product.setSalesPrice(createProductDto.getSalesPrice());
+        product.setQuantity(createProductDto.getQuantity());
+        product.setCategory(category);
         productRepository.save(product);
         return "Product was added successfully!";
     }
@@ -43,6 +55,15 @@ public class ProductServiceImpl implements ProductService {
     public String deleteById(int id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+    }
+
+    @Override
+    public List<Product> getProductsByCategory(String categoryName) {
+        Category category = categoryRepository.findByCategoryNameIgnoreCase(categoryName).get(0);
+        return productRepository.findAll()
+        .stream()
+        .filter(product -> product.getCategory().getCategoryName().equalsIgnoreCase(categoryName))
+        .collect(Collectors.toList());
     }
     
 }

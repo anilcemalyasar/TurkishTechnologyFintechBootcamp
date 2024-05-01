@@ -1,5 +1,7 @@
 package com.turkishtechnology.fintechjava.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +36,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "categoryId", referencedColumnName = "categoryId")
+    @JsonIgnore
     private Category category;
 
 }
