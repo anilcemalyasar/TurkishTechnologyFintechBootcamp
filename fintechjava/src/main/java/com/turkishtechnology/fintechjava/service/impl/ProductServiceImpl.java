@@ -58,8 +58,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsByCategory(String categoryName) {
-        Category category = categoryRepository.findByCategoryNameIgnoreCase(categoryName).get(0);
+    public List<Product> getProductsByCategory(String categoryName) throws Exception {
+        if (categoryRepository.findByCategoryNameIgnoreCase(categoryName).isEmpty()){
+            throw new Exception(categoryName + " kategorisi bulunmamaktadır!");
+        }
         return productRepository.findAll()
         .stream()
         .filter(product -> product.getCategory().getCategoryName().equalsIgnoreCase(categoryName))

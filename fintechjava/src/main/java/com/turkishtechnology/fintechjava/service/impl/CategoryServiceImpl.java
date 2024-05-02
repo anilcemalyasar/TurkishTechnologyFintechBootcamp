@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.turkishtechnology.fintechjava.model.dto.CreateCategoryDto;
 import com.turkishtechnology.fintechjava.model.entity.Category;
 import com.turkishtechnology.fintechjava.repository.CategoryRepository;
 import com.turkishtechnology.fintechjava.service.CategoryService;
@@ -27,18 +28,22 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public String addCategory(Category category) {
+    public String addCategory(CreateCategoryDto createCategoryDto) {
+        Category category = new Category();
+        category.setCategoryName(createCategoryDto.getCategoryName());
         categoryRepository.save(category);
-        return "Category was added successfully!";
+        return "Category " + category.getCategoryName() + " was added successfully!";
     }
 
     @Override
-    public Category deleteById(int categoryId) {
+    public String deleteById(int categoryId) {
         Optional<Category> optional = categoryRepository.findById(categoryId);
-        if (optional != null) {
-            categoryRepository.delete(optional.get());
+        if (!optional.isPresent()) {
+            return categoryId + " numaralı bir kategori bulunmamaktadır!";
         }
-        return optional.get();
+        categoryRepository.delete(optional.get());
+        return categoryId + " numaralı kategori silindi!";
+        
     }
     
 }

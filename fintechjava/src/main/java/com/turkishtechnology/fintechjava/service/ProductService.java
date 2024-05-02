@@ -12,5 +12,5 @@ public interface ProductService {
     String addProduct(CreateProductDto createProductDto);
     Product updateProduct(Product product);
     String deleteById(int id);
-    List<Product> getProductsByCategory(String categoryName);
+    List<Product> getProductsByCategory(String categoryName) throws Exception;
 }
