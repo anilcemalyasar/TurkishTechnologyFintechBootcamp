@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.turkishtechnology.fintechjava.model.dto.CreateCategoryDto;
+import com.turkishtechnology.fintechjava.model.dto.UpdateCategoryDto;
 import com.turkishtechnology.fintechjava.model.entity.Category;
 import com.turkishtechnology.fintechjava.repository.CategoryRepository;
 import com.turkishtechnology.fintechjava.service.CategoryService;
@@ -44,6 +45,15 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.delete(optional.get());
         return categoryId + " numaralı kategori silindi!";
         
+    }
+
+    @Override
+    public Category updateCategory(UpdateCategoryDto updateCategoryDto) {
+        Category category = categoryRepository.findById(updateCategoryDto.getCategoryId())
+                                .orElseThrow();
+        category.setCategoryName(updateCategoryDto.getCategoryName());
+        categoryRepository.save(category);
+        return category;
     }
     
 }

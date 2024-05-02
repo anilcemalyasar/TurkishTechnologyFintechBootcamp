@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turkishtechnology.fintechjava.model.dto.CreateCategoryDto;
+import com.turkishtechnology.fintechjava.model.dto.UpdateCategoryDto;
 import com.turkishtechnology.fintechjava.model.entity.Category;
 import com.turkishtechnology.fintechjava.service.CategoryService;
 
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -45,5 +47,9 @@ public class CategoryController {
         return categoryService.deleteById(categoryId);
     }
     
+    @PutMapping("/categories/update")
+    public Category updateCategory(@RequestBody UpdateCategoryDto updateCategoryDto) {
+        return categoryService.updateCategory(updateCategoryDto);
+    }
     
 }

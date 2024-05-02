@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.turkishtechnology.fintechjava.model.dto.CreateProductDto;
+import com.turkishtechnology.fintechjava.model.dto.UpdateProductDto;
 import com.turkishtechnology.fintechjava.model.entity.Category;
 import com.turkishtechnology.fintechjava.model.entity.Product;
 import com.turkishtechnology.fintechjava.repository.CategoryRepository;
@@ -46,9 +47,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Product product) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateProduct'");
+    public Product updateProduct(int productId, UpdateProductDto updateProductDto) {
+        Product product = productRepository.findById(productId)
+                            .orElseThrow();
+        product.setProductName(updateProductDto.getProductName());
+        product.setQuantity(updateProductDto.getQuantity());
+        product.setSalesPrice(updateProductDto.getSalesPrice());
+        productRepository.save(product);
+        return product;
     }
 
     @Override
