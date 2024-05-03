@@ -3,6 +3,7 @@ package com.turkishtechnology.fintechjava.service;
 import java.util.List;
 
 import com.turkishtechnology.fintechjava.model.dto.CreateProductDto;
+import com.turkishtechnology.fintechjava.model.dto.ResponseProductDto;
 import com.turkishtechnology.fintechjava.model.dto.UpdateProductDto;
 import com.turkishtechnology.fintechjava.model.entity.Product;
 
@@ -14,4 +15,5 @@ public interface ProductService {
     Product updateProduct(int productId, UpdateProductDto updateProductDto);
     String deleteById(int id);
     List<Product> getProductsByCategory(String categoryName) throws Exception;
+    ResponseProductDto getProductByName(String productName) throws Exception;
 }

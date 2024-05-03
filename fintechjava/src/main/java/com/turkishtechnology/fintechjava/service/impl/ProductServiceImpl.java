@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.turkishtechnology.fintechjava.model.dto.CreateProductDto;
+import com.turkishtechnology.fintechjava.model.dto.ResponseProductDto;
 import com.turkishtechnology.fintechjava.model.dto.UpdateProductDto;
 import com.turkishtechnology.fintechjava.model.entity.Category;
 import com.turkishtechnology.fintechjava.model.entity.Product;
@@ -59,8 +60,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String deleteById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+        Product product = productRepository.findById(id)
+                        .orElseThrow();
+        productRepository.delete(product);
+        return product.getProductName() + " isimli ürün silindi!";
     }
 
     @Override
@@ -72,6 +75,25 @@ public class ProductServiceImpl implements ProductService {
         .stream()
         .filter(product -> product.getCategory().getCategoryName().equalsIgnoreCase(categoryName))
         .collect(Collectors.toList());
+    }
+
+    @Override
+    public ResponseProductDto getProductByName(String productName) throws Exception {
+        List<Product> products = productRepository.findByProductNameIgnoreCase(productName);
+        if (products.isEmpty()) {
+            throw new Exception("Product " + productName + " not found!");
+        }
+        Product product = products.get(0);
+        return mapProductToDto(product);
+    }
+
+    private ResponseProductDto mapProductToDto(Product product) {
+        ResponseProductDto productDto = new ResponseProductDto();
+        productDto.setProductName(product.getProductName());
+        productDto.setSalesPrice(product.getSalesPrice());
+        productDto.setQuantity(product.getQuantity());
+        productDto.setCategoryName(product.getCategory().getCategoryName());
+        return productDto;
     }
     
 }
