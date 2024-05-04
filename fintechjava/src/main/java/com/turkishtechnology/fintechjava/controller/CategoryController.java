@@ -1,10 +1,15 @@
 package com.turkishtechnology.fintechjava.controller;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.turkishtechnology.fintechjava.exceptions.CategoryNotFoundException;
 import com.turkishtechnology.fintechjava.model.dto.CreateCategoryDto;
 import com.turkishtechnology.fintechjava.model.dto.ResponseCategoryDto;
 import com.turkishtechnology.fintechjava.model.dto.UpdateCategoryDto;
@@ -29,7 +34,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/categories")
-    public List<Category> getAllCategories() {
+    public List<ResponseCategoryDto> getAllCategories() {
         return categoryService.getAllCategories();
     }
     
@@ -39,8 +44,12 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/{categoryId}")
-    public ResponseCategoryDto getById(@PathVariable int categoryId) {
-        return categoryService.getById(categoryId);
+    public ResponseEntity<ResponseCategoryDto> getById(@PathVariable int categoryId) {
+        try {
+            return ResponseEntity.ok(categoryService.getById(categoryId));
+        } catch (CategoryNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
     @DeleteMapping("/categories/{categoryId}")

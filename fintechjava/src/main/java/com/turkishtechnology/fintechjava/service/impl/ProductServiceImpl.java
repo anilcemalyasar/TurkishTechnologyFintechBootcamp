@@ -100,7 +100,7 @@ public class ProductServiceImpl implements ProductService {
     public static ProductDto mapProductToProductDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setProductName(product.getProductName());
-        productDto.setSalesPrice(product.getQuantity());
+        productDto.setSalesPrice(product.getSalesPrice());
         productDto.setQuantity(product.getQuantity());
         return productDto;
     }

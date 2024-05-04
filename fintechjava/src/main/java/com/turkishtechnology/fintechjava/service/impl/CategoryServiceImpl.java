@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.turkishtechnology.fintechjava.exceptions.CategoryNotFoundException;
 import com.turkishtechnology.fintechjava.model.dto.CreateCategoryDto;
 import com.turkishtechnology.fintechjava.model.dto.ProductDto;
 import com.turkishtechnology.fintechjava.model.dto.ResponseCategoryDto;
@@ -23,13 +24,17 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
 
     @Override
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<ResponseCategoryDto> getAllCategories() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(c -> mapCategoryToDto(c))
+                .toList();
     }
 
     @Override
-    public ResponseCategoryDto getById(int categoryId) {
-        Category category = categoryRepository.findById(categoryId).orElseThrow();
+    public ResponseCategoryDto getById(int categoryId) throws CategoryNotFoundException {
+        Category category = categoryRepository.findById(categoryId)
+                        .orElseThrow(() -> new CategoryNotFoundException(categoryId + " numaralı bir kategori bulunmamaktadır!"));
         return mapCategoryToDto(category);
     }
 
