@@ -1,5 +1,6 @@
 package com.turkishtechnology.fintechjava.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.turkishtechnology.fintechjava.model.dto.CreateCategoryDto;
+import com.turkishtechnology.fintechjava.model.dto.ProductDto;
+import com.turkishtechnology.fintechjava.model.dto.ResponseCategoryDto;
 import com.turkishtechnology.fintechjava.model.dto.UpdateCategoryDto;
 import com.turkishtechnology.fintechjava.model.entity.Category;
+import com.turkishtechnology.fintechjava.model.entity.Product;
 import com.turkishtechnology.fintechjava.repository.CategoryRepository;
 import com.turkishtechnology.fintechjava.service.CategoryService;
 
@@ -24,8 +28,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getById(int categoryId) {
-        return categoryRepository.findById(categoryId).orElseThrow();
+    public ResponseCategoryDto getById(int categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow();
+        return mapCategoryToDto(category);
     }
 
     @Override
@@ -55,5 +60,18 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.save(category);
         return category;
     }
+
+    private ResponseCategoryDto mapCategoryToDto(Category category) {
+        ResponseCategoryDto categoryDto = new ResponseCategoryDto();
+        categoryDto.setCategoryName(category.getCategoryName());
+        List<ProductDto> productDtos = new ArrayList<ProductDto>();
+        for (Product product : category.getProducts()) {
+            productDtos.add(ProductServiceImpl.mapProductToProductDto(product));
+        }
+        categoryDto.setProducts(productDtos);
+        return categoryDto;
+    }
+
+
     
 }

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.turkishtechnology.fintechjava.model.dto.CreateProductDto;
+import com.turkishtechnology.fintechjava.model.dto.ProductDto;
 import com.turkishtechnology.fintechjava.model.dto.ResponseProductDto;
 import com.turkishtechnology.fintechjava.model.dto.UpdateProductDto;
 import com.turkishtechnology.fintechjava.model.entity.Category;
@@ -87,12 +88,20 @@ public class ProductServiceImpl implements ProductService {
         return mapProductToDto(product);
     }
 
-    private ResponseProductDto mapProductToDto(Product product) {
+    public static ResponseProductDto mapProductToDto(Product product) {
         ResponseProductDto productDto = new ResponseProductDto();
         productDto.setProductName(product.getProductName());
         productDto.setSalesPrice(product.getSalesPrice());
         productDto.setQuantity(product.getQuantity());
         productDto.setCategoryName(product.getCategory().getCategoryName());
+        return productDto;
+    }
+
+    public static ProductDto mapProductToProductDto(Product product) {
+        ProductDto productDto = new ProductDto();
+        productDto.setProductName(product.getProductName());
+        productDto.setSalesPrice(product.getQuantity());
+        productDto.setQuantity(product.getQuantity());
         return productDto;
     }
     

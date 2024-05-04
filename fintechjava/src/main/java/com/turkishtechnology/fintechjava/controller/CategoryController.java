@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.turkishtechnology.fintechjava.model.dto.CreateCategoryDto;
+import com.turkishtechnology.fintechjava.model.dto.ResponseCategoryDto;
 import com.turkishtechnology.fintechjava.model.dto.UpdateCategoryDto;
 import com.turkishtechnology.fintechjava.model.entity.Category;
 import com.turkishtechnology.fintechjava.service.CategoryService;
@@ -38,7 +39,7 @@ public class CategoryController {
     }
 
     @GetMapping("/categories/{categoryId}")
-    public Category getById(@PathVariable int categoryId) {
+    public ResponseCategoryDto getById(@PathVariable int categoryId) {
         return categoryService.getById(categoryId);
     }
 
