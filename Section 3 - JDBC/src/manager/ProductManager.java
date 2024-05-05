@@ -26,4 +26,41 @@ public class ProductManager {
 
         return rowInserted == 1 ? true : false;
     } 
+
+
+    public boolean update(Product product) throws SQLException {
+        Connection connection = DBUtilities.getConnection();
+        String sql = "update product set productName=?, salesPrice=? where productId=?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+
+        // first ? (productName)
+        statement.setString(1, product.getProductName());
+
+        // second ? (salesPrice)
+        statement.setDouble(2, product.getSalesPrice());
+
+        // third ? (productId)
+        statement.setLong(3, product.getProductId());
+
+        int rowUpdated = statement.executeUpdate();
+        connection.close();
+
+        return rowUpdated == 1 ? true : false;
+    }
+
+    public boolean delete(long productId) throws SQLException {
+        Connection conn = DBUtilities.getConnection();
+        String sql = "delete from product where productId=?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+
+        // first ? (productId)
+        statement.setLong(1, productId);
+
+        int rowDeleted = statement.executeUpdate();
+        conn.close();
+
+        return rowDeleted == 1 ? true : false;
+        
+    }
+
 }
