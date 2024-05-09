@@ -6,6 +6,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String emailAddress;
+    private int age;
 
 
     public User(String firstName, String lastName, String emailAddress) {
@@ -40,5 +41,23 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
+
+    public int getAge() {
+        return age;
+    }
+
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User: \nUserId=" + userId + "\nFirst Name=" + firstName + "\nLast Name=" + lastName + "\nEmail Address="
+                + emailAddress + "\nAge=" + age;
+    }
+
+    
     
 }
