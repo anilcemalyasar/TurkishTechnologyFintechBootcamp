@@ -1,7 +1,6 @@
 package com.springintro.gradesubmission.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,7 +49,7 @@ public class GradeController {
     // when a user submit the form
     @PostMapping("/handleSubmit")
     public String submitGrade(Grade grade) {
-        System.out.println(grade);
+        System.out.println(grade); 
         gradeService.submitGrade(grade);
         return "redirect:/grades";
     }
