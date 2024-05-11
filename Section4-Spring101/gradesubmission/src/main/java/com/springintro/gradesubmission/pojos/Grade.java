@@ -36,5 +36,12 @@ public class Grade {
         this.score = score;
     }
 
+    @Override
+    public String toString() {
+        return "Name: " + getName() + "\n"
+            + "Subject: " + getSubject() + "\n"
+            + "Score: " + getScore() + "\n";
+    }
+
     
 }
