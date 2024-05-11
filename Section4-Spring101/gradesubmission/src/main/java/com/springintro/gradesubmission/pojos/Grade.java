@@ -1,20 +1,24 @@
 package com.springintro.gradesubmission.pojos;
 
+import java.util.UUID;
+
 public class Grade {
     
+    private String id;
     private String name;
     private String subject;
     private String score;
 
 
     public Grade() {
-        
+        this.id = UUID.randomUUID().toString();
     }
 
     public Grade(String name, String subject, String score) {
         this.name = name;
         this.subject = subject;
         this.score = score;
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getName() {
@@ -36,12 +40,22 @@ public class Grade {
         this.score = score;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
+
     @Override
     public String toString() {
         return "Name: " + getName() + "\n"
             + "Subject: " + getSubject() + "\n"
             + "Score: " + getScore() + "\n";
     }
+
 
     
 }
