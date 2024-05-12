@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springintro.gradesubmission.Constants;
 import com.springintro.gradesubmission.pojos.Grade;
 import com.springintro.gradesubmission.repository.GradeRepository;
 
@@ -37,18 +38,18 @@ public class GradeService {
                 return i;
             }
         }
-        return -1; // not found
+        return Constants.NOT_FOUND; // not found
     }
 
     public Grade getGradeById(String id) {
         int index = getGradeIndex(id);
-        return index == -1 ? new Grade() : getGrade(index);
+        return index == Constants.NOT_FOUND ? new Grade() : getGrade(index);
     }
     
     public void submitGrade(Grade grade) {
         int index = getGradeIndex(grade.getId());
         // if grade already exists
-        if (index != -1) {
+        if (index != Constants.NOT_FOUND) {
             updateGrade(grade, index);
         }
         else {

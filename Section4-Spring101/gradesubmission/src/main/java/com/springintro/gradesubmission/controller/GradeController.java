@@ -1,14 +1,15 @@
 package com.springintro.gradesubmission.controller;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.springintro.gradesubmission.pojos.Grade;
 import com.springintro.gradesubmission.service.GradeService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,8 +49,9 @@ public class GradeController {
 
     // when a user submit the form
     @PostMapping("/handleSubmit")
-    public String submitGrade(Grade grade) {
-        System.out.println(grade); 
+    public String submitGrade(@Valid Grade grade, BindingResult result) {
+        // System.out.println(grade); 
+        if (result.hasErrors()) return "form";
         gradeService.submitGrade(grade);
         return "redirect:/grades";
     }

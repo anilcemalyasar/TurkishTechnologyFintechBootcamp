@@ -2,10 +2,16 @@ package com.springintro.gradesubmission.pojos;
 
 import java.util.UUID;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class Grade {
     
     private String id;
+
+    @NotBlank(message = "Name can not be blank!")
     private String name;
+
+    @NotBlank(message = "Subject can not be blank!")
     private String subject;
     private String score;
 
