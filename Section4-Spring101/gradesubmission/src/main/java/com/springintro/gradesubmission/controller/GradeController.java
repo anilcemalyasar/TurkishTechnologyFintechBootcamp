@@ -20,14 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class GradeController {
 
-    // List<Grade> studentGrades = Arrays.asList(
-    //     new Grade("Harry", "Potions", "B-"),
-    //     new Grade("Hermione", "Arithmancy", "A+"),
-    //     new Grade("Neville", "Charms", "A-")
-    // );
-
-    // List<Grade> studentGrades = new ArrayList<>();
-
+    // now, controller and service are not TIGHTLY COUPLED!
     @Autowired
     GradeService gradeService;
 
