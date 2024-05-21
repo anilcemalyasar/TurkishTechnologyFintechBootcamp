@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 
 import com.javaguides.studentmanagementsystem.model.Student;
 import com.javaguides.studentmanagementsystem.service.StudentService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -68,6 +70,13 @@ public class StudentController {
         studentService.updateStudent(existingStudent);
         return "redirect:/students";
     }
+
+    @GetMapping("/students/delete/{id}")
+    public String deleteStudent(@PathVariable Long id) {
+        studentService.deleteStudentById(id);
+        return "redirect:/students";
+    }
+    
     
     
 }
